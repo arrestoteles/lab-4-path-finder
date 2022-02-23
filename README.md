@@ -3,11 +3,12 @@
 In this lab your task is to write a program that calculates the shortest path between two nodes in a graph.
 You will try this on several kinds of graphs.
 
-
 ## About the labs
 
-- The lab is part of the examination of the course. Therefore, you must not copy code from or show code to other groups. You are welcome to discuss ideas with one another, but anything you do must be **the work of you and your lab partners**.
-- Please read the pages "Doing the lab assignments" and "Running the labs" on Canvas.
+The lab is [part of the examination](https://canvas.gu.se/courses/56719/pages/labs-general-information) of the course. Therefore, you must not copy code from or show code to other groups. You are welcome to discuss ideas with one another, but anything you do must be **the work of you and your lab partners**.
+
+- See [Doing the labs](https://canvas.gu.se/courses/56719/pages/doing-the-labs-chalmers-gitlab) for how to work with Chalmers GitLab.
+- See [Running the labs](https://canvas.gu.se/courses/56719/pages/running-the-labs-command-line-eclipse-or-intellij) for help running the lab code on the command line or in an IDE such as IntelliJ or Eclipse.
 
 
 ## Getting started
@@ -657,22 +658,15 @@ This should be the following files:
 
 Search for all the places with a comment called `TODO: Task n`.
 
-When you are finished, create a tag `submission0` (for the commit you wish to submit).
-For re-submissions, use `submission1`, `submission2`, etc.
-The tag serves as your proof of submission.
-You cannot change or delete it afterwards.
-We will then grade your submission and post our feedback as issues in your project.
-For more information on how to submit, see "Doing the lab assignments" on Canvas.
+When you are ready, [submit your work](https://canvas.gu.se/courses/56719/pages/doing-the-labs-chalmers-gitlab#submitting-a-lab).
 
-Please do not change the signatures or behaviour of pre-existing methods unless instruncted, as it will make your submission harder for us to test and grade.
-Of course, you are allowed to add things (such as new instance variables or private methods) that do not affect the existing functionality.
 
 ### Robograder
 
-Our friendly *Robograder* returns to help you test your submission before you submit.
-Create a tag starting with `test` (for example `testPlz`) on Chalmers GitLab, and Robograder will report back to you in a GitLab Issue.
-Alas, Robograder only has time to test your submission twice per deadline.
+Our friendly [*Robograder*](https://canvas.gu.se/courses/56719/pages/doing-the-labs-chalmers-gitlab#robograder) returns to help you test your work before you submit.
+Be sure to use it!
 
+Note that Robograder can only check your code, not your answers file.
 
 ## Optional tasks
 
