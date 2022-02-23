@@ -64,7 +64,7 @@ Note that a random walk will find a different path every time.
 It may even run forever (or it would, if we didn't terminate the random walk after visiting 1 million nodes).
 
 Alternatively, you may directly specify start and goal nodes as additional program arguments.
-In that case, the program directly prints the found path:
+In that case, the program directly prints the path found:
 
 ```
 $ javac RunPathFinder.java
@@ -76,7 +76,7 @@ Number of edges: 15
 Skara --[21]-> Skara --[15]-> Skara --[25]-> Skara --[36]-> Skara --[21]-> ..... --[31]-> Åkarp --[21]-> Götene --[36]-> Floby --[19]-> Källby --[35]-> Vara
 ```
 
-Alternatively, you can comment out lines 26–36 in **RunPathFinder.java** and set the arguments directly in the source code.
+Alternatively, you can comment out lines 24–35 in **RunPathFinder.java** and set the arguments directly in the source code.
 
 
 ## Descriptions of the Java classes
@@ -96,7 +96,7 @@ The lab contains the following Java classes:
 ### RunPathFinder
 
 This is the main class, which was described previously in the background.
-It consists of a single method:
+It is the entry point for graph searches:
 
     RunPathFinder:
         void main(String[] args)
@@ -112,15 +112,15 @@ It consists of some searching methods, inner classes for priority queue entries 
         Result searchUCS(Node start, Node end)    // this is Task 1a+c
         Result searchAstar(Node start, Node end)  // this is Task 4
 
-        List<DirectedEdge<node>> extractPath(PQEntry entry)     // this is Task 1b
+        List<DirectedEdge<node>> extractPath(PQEntry entry) // this is Task 1b
 
-        class PQEntry             // you will extend this in Task 4
+        class PQEntry  // you will extend this in Task 4
         class Result
 
 ### DirectedEdge
 
-A weighted directed edge, consisting of two nodes and a weight.
-If the weight isn't provided (such as for the graph types **WordLadder** and **NPuzzle**), it defaults to 1.0.
+A weighted directed edge, consisting of two nodes and a non-negative weight..
+If the weight isn't provided (such as for the graph types **WordLadder** and **NPuzzle**), it defaults to 1.
 
     DirectedEdge<Node>:
         Node from()
@@ -137,15 +137,16 @@ This is an interface with three important methods:
         double guessCost(Node from, Node goal)
 
 The methods are described later.
-**PathFinder** assumes that the graph implements this interface, which all graphs below do.
+**PathFinder** works for graphs implements this interface.
+All the below graphs do.
 
 Note that this interface differs from the graph interface in the course API (it lacks several of the API methods).
 But it is enough for the purposes in this lab.
 
 ### AdjacencyGraph
 
-The **AdjacencyGraph** reads a generic finite graph, with one edge per line, and stores it as an adjacency list as described in the course book and the lectures.
-The graphs can represent anything.
+The **AdjacencyGraph** reads a generic finite graph, one edge per line, and stores it as an adjacency list as described in the course book and the lectures.
+Th graph can represent anything.
 In the graph repository, there are distance graphs for cities (city graphs) in several regions, including EU and Västra Götaland (VGregion).
 There is also a link graph between more than 4500 Wikipedia pages, "wikipedia-graph.txt":
 
@@ -167,7 +168,7 @@ An edge represents a move in the game, swapping the empty tile with an adjacent 
 We represent each state as a string encoding of an *N* x *N* matrix.
 The tiles are represented by characters starting from the letter A (`A`…`H` for *N*=3, and `A`…`O` for *N*=4).
 The empty tile is represented by `_`.
-To make it more readable for humans every row is separated by `/`, like this:
+To make it more readable for humans, every row is separated by `/`:
 
 ```
 $ java RunPathFinder ucs NPuzzle 2 /_C/BA/ /AB/C_/
@@ -184,13 +185,13 @@ No path found from /ABC/DEF/HG_/ to /ABC/DEF/GH_/
 ```
 
 **Note:**
-The above output shows the output of a working implementation.
-The current implementation of the UCS algorithm is just a stub that never finds anything.
+The above output shows a working implementation.
+The current implementation of UCS is just a stub that never finds anything.
 Your Task 1 is to fix that.
 
 It's no use trying the "random" algorithm on the **NPuzzle**: it will almost certainly never find a solution.
-In fact, already *N*=4, the number of states is 16! ≈ 2 · 10^13.
-Thus, we cannot store the set of nodes of this graph in memory.
+In fact, already for *N* = 4, the number of states is 16! ≈ 2 · 10^13.
+Thus, we cannot even store the set of nodes in memory.
 
 ### GridGraph
 
@@ -260,46 +261,57 @@ You will complete it in Task 2.
 > ([Wikipedia](https://en.wikipedia.org/wiki/Word_ladder))
 
 We model this problem as a graph.
-The nodes denote the words and the edges denote one step in this word ladder.
+The nodes denote words in a dictionary and the edges denote one step in this word ladder.
+Note that edges only connect words of the same length.
 
 The class does not store the full graph in memory, just the dictionary of words.
 The edges are then computed on demand.
 The class already contains code that reads the dictionary, but you must complete the rest of the class.
 
+
 ## About the graphs in the collection
 
 **Note:**
 All graph files are encoded in UTF-8 (Unicode).
-If you experience problems searching for words with special characters (`å`, `ä`, `ö`), this may point to a character encoding problem in your setup.
+If you experience problems searching for words with special characters (`å`, `ä`, `ö`), your setup may have a character encoding problem.
 
 #### AdjacencyGraph:
 
-- All graphs **citygraph-XX.txt** are extracted from freely available [mileage charts](https://www.mileage-charts.com/). The smallest graph has 130 cities and 838 edges (citygraph-VGregion.txt), and the largest one 996 cities and 28054 edges (citygraph-EU.txt). All edge costs are in kilometers.
+- All graphs **citygraph-XX.txt** are extracted from freely available [mileage charts](https://www.mileage-charts.com/).
+  The smallest graph has 130 cities and 838 edges (citygraph-VGregion.txt).
+  The largest one 996 cities and 28054 edges (citygraph-EU.txt).
+  All edge costs are in kilometers.
   - Suggested searches: `Göteborg` to `Götene` (**citygraph-VGregion.txt**); `Lund` to `Kiruna` (**citygraph-SE.txt**); `Porto, Portugal` to `Vorkuta, Russia` (**citygraph-EU.txt**)
 
-- **wikipedia-graph.txt** is converted from [the Wikispeedia dataset](http://snap.stanford.edu/data/wikispeedia.html) in SNAP (Stanford Large Network Dataset Collection). It contains 4587 Wikipedia pages and 119882 page links. All edges have cost 1.
+- **wikipedia-graph.txt** is converted from [the Wikispeedia dataset](http://snap.stanford.edu/data/wikispeedia.html) in SNAP (Stanford Large Network Dataset Collection).
+  It contains 4587 Wikipedia pages and 119882 page links.
+  All edges have cost 1.
   - Suggested search: `Superconductivity` to `Anna_Karenina`
 
 #### NPuzzle:
 
-- **NPuzzle** doesn't need a file for initializing the graph, just a number giving the size of the puzzle. Larger sizes than 3 are usually too difficult, even for the algorithms in this lab.
+- **NPuzzle** does not need a file for initializing the graph, just a number giving the size of the puzzle.
+  Larger sizes than 3 are usually too difficult, even for the algorithms in this lab.
   - Suggested search for size 2: `/_C/BA/` to goal `/AB/C_/`
   - Suggested searches for size 3: any of `/_AB/CDE/FGH/`, `/CBA/DEF/_HG/`, `/FDG/HE_/CBA/` or `/HFG/BED/C_A/`, to the goal `/ABC/DEF/GH_/`
-  - Try also the following size 3 puzzle, which doesn't have a solution (why?): `/ABC/DEF/HG_/` to `/ABC/DEF/GH_/`
+  - Try also the following size-3 puzzle, which doesn't have a solution (why?): `/ABC/DEF/HG_/` to `/ABC/DEF/GH_/`
 
 #### GridGraph:
 
-- **AR0011SR.map** and **AR0012SR.map** are taken from the [2D Pathfinding Benchmarks](https://www.movingai.com/benchmarks/grids.html) in Nathan Sturtevant's Moving AI Lab. The maps are from the collection "Baldurs Gate II Original maps", and are grids of sizes 216 x 224 and 148 x 139, respectively. There are also associated PNG files, so that you can see how they look like.
+- **AR0011SR.map** and **AR0012SR.map** are taken from the [2D Pathfinding Benchmarks](https://www.movingai.com/benchmarks/grids.html) in Nathan Sturtevant's Moving AI Lab.
+  The maps are from the collection "Baldurs Gate II Original maps", and are grids of sizes 216 x 224 and 148 x 139, respectively.
+  There are also associated PNG files, so that you can see how they look like.
   - Suggested searches: `23:161` to `130:211` (**AR0011SR.map**); `11:73` to `85:127` (**AR0012SR.map**)
 
-- **maze-10x5.txt**, **maze-20x10.txt**, and **maze-100x50.txt** are generated by a [random maze generator](http://www.delorie.com/game-room/mazes/genmaze.cgi). They are grids of sizes 41 x 11, 81 x 21, and 201 x 101, respectively.
+- **maze-10x5.txt**, **maze-20x10.txt**, and **maze-100x50.txt** are generated by a [random maze generator](http://www.delorie.com/game-room/mazes/genmaze.cgi).
+  They are grids of sizes 41 x 11, 81 x 21, and 201 x 101, respectively.
   - Suggested searches: `1:1` to `39:9` (**maze-10x5.txt**); `1:1` to `79:19` (maze-20x10.txt); `1:1` to `199:99` (**maze-100x50.txt**)
 
 #### WordLadder:
 
 - **english-crossword.txt** comes from the official crossword lists in the [Moby project](https://en.wikipedia.org/wiki/Moby_Project).
   It consists of 117,969 words.
-  - Suggested searches: any two words of the same length (between 4 and 8 characters)
+  - Suggested searches: any start and goal of the same length (between 4 and 8 characters)
 
 - **swedish-romaner.txt** and **swedish-saldo.txt** are two Swedish word lists compiled from [Språkbanken Text](https://spraakbanken.gu.se/resurser).
   They contain 75,740 words (**words-romaner.txt**) and 888,275 words (**words-saldo.txt**), respectively.
@@ -317,7 +329,7 @@ It is also arguably easier to understand than the usual formulation of Dijkstra'
 ### Task 1a: The simple UCS algorithm
 
 The main data structure used in UCS is a priority queue.
-It contains graph nodes paired with the current best cost to reach them.
+It contains graph nodes paired with the cost to reach them.
 We store this information as the inner class `PQEntry` (which is already implemented):
 
     class PQEntry:
@@ -328,7 +340,7 @@ We store this information as the inner class `PQEntry` (which is already impleme
 
 The `backPointer` is necessary for recreating the final path from the start node to the goal.
 More about this in Task 1b below.
-The very first entry will not have any previous entry, so then we set `lastEdge` and `baskPointer` to `null`.
+The very first entry will not have any previous entry, so we set `lastEdge` and `baskPointer` to `null`.
 
 Here is pseudocode of the simplest version of UCS:
 
@@ -347,8 +359,8 @@ Otherwise, we will continue adding new entries to the queue indefinitely.
 
 Implement this algorithm in the `searchUCS` method.
 When you return a result, use `null` for the `path` argument for now.
-There is a variable `iterations` already defined, which you should increase every time you remove an entry from `pqueue`.
-When you have done this, you should be able to run some simple queries, such as finding the shortest route to Kungälv, Lerum, or Alingsås:
+You should increase the counter `iterations` every time you remove an entry from `pqueue`.
+When you have done this, you should be able to run queries for nodes not too far apart:
 
 ```
 $ java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-VGregion.txt Skara Lerum
@@ -361,20 +373,20 @@ WARNING: you have not implemented extractPath!
 But there are two problems with this implementation:
 
 1. the path found is not printed, and
-2. it becomes extremely slow on more difficult problems (e.g., try to find the way to Vara).
+2. it becomes extremely slow on more difficult problems (e.g., try to find the way from Skara to Vara).
 
 We will address these problems in Tasks 1b and 1c.
 
 ### Task 1b: Extracting the solution
 
-Now you should write code to extract the solution, which is the list of edges forming the shortest path.
+Now you should write code to extract the solution, the list of edges forming the shortest path.
 For this, implement and make use of the skeleton method `extractPath`:
 
     List<DirectedEdge<Node>> extractPath(PQEntry entry)
 
 Make sure you get the order of edges right!
 
-After this is completed you should be able to run this:
+After this is completed, your output will change:
 
 ```
 $ java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-VGregion.txt Skara Lerum
@@ -384,14 +396,16 @@ Cost of path from Skara to Lerum: 115
 Number of edges: 6
 Skara --[35]-> Vara --[28]-> Vårgårda --[9]-> Jonstorp --[15]-> Alingsås --[23]-> Stenkullen --[5]-> Lerum
 ```
-As you can see, exactly the same result as before, but now the path is correct too.
+
+As you can see, the result is the same as before, but now the path is printed too.
+Check that you get the same path as shown here.
 
 
 ### Task 1c: Remembering visited nodes
 
-The reason why the algorithm is slow is that it will revisit the same node several times.
+The reason why the algorithm is slow is that it will revisit the same node every time it is reached.
 There are hundreds of ways to get from Göteborg to Stenkullen, and the algorithm visits most of them before it finds its way to Alingsås.
-But all the subsequent visits to Stenkullen are unnecessary, since the first one is already via the shortest path.
+But all the subsequent visits to Stenkullen are unnecessary because the first visit is already via the shortest path (why?).
 
 Therefore, a simple solution is to record the visited nodes in a set.
 Immediately after you retrieve a node from the priority queue, check if it has already been visited.
@@ -414,7 +428,7 @@ Skara --[35]-> Vara --[28]-> Vårgårda --[9]-> Jonstorp --[15]-> Alingsås --[2
 ```
 
 The number of loop iterations went down by a factor of 300!
-And you should be able to solve all kinds of problems in adjacency graphs, n-puzzles, and grid graphs:
+Now you should be able to solve all kinds of problems in adjacency graphs, n-puzzles, and grid graphs:
 
 ```
 $ java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-EU.txt "Volos, Greece" "Oulu, Finland"
@@ -444,9 +458,9 @@ Go on!
 Try the suggestions for the different graphs in the section "About the graphs in the collection" above!
 
 ***Important***:
-Make sure you get the total costs and path lengths that are shown in these examples.
+Make sure you get the cost (shorted path length) shown in these examples.
 If you got a higher cost, then UCS didn't find the optimal path.
-If you got a lower cost, then there's an error in how you calculate the path costs (or you take some illegal shortcuts).
+If you got a lower cost, there's an error in how you calculate the path costs (or you take some illegal shortcuts).
 Furthermore, it is a good sign (but not required) if your implementation has the same number of loop iterations as shown above.
 
 
@@ -459,16 +473,21 @@ What is missing is the implementation of `outgoingEdges`:
 
     public List<DirectedEdge<String>> outgoingEdges(String word)
 
-An edge is one step in the word ladder: the target word must differ by exactly one letter (and still be in the dictionary).
+An edge is one step in the word ladder.
+The target word must:
 
-At your help are the following two instance variables that are updated by the `addWord` method:
+- be in the dictionary,
+- be of the same length,
+- differ by exacty one letter.
+
+At your disposal are the following two instance variables:
 
     private Set<String> dictionary
     private Set<Character> alphabet
 
 Make sure to use `alphabet` (the set of letters appearing in dictionary words) instead of going over a fixed collection of characters.
 
-After your implementation is completed, you should be able to solve the following word ladders:
+After you completed your implementation, you should be able to solve the following word ladders:
 
 ```
 $ java RunPathFinder ucs WordLadder graphs/WordLadder/words-romaner.txt
@@ -529,7 +548,7 @@ To be able to do this efficiently, you may need to add instance variables to the
 
     private class PQEntry
 
-To work, A* needs a *distance heuristic*, which is an educated guess of the distance between two nodes.
+To work, A* needs a *distance heuristic*, an educated guess of the distance between two nodes.
 This requires some additional insight into the problem, so the heuristics are different for different types of graphs and problems.
 Our graph API (the interface **DirectedGraph**) provides this heuristic in the form of the method `guessCost`, which takes two nodes as argument and returns a cost estimate:
 
@@ -540,7 +559,7 @@ The estimated total cost for an entry is then defined as the cost so far *plus* 
 **Important**:
 Make sure your implementation doesn't call `guessCost` too many times.
 This could slow down your search.
-So the the priority queue comparator should not call `guessCost` directly, but instead use a value stored with the priority queue entry.
+The priority queue comparator should not call `guessCost` directly, but instead use a value stored with the priority queue entry.
 Also avoid operations on the priority queue that take linear time such as iterating over it or calling `contains`.
 
 **Important**:
@@ -569,9 +588,9 @@ Number of edges: 24
 Note that A* visits much fewer nodes, but finds a path of the same length as UCS.
 If your implementation doesn't, then there's probably a bug somewhere.
 
-If we don't have a way of guessing the cost, we should take 0 as our guess.
+If we don't have a way of guessing the cost, we should use 0.
 That's the current implementation of `guessCost` in the other graph types.
-In that case, the A* algorithm behaves exactly like UCS.
+In that case, the A* algorithm behaves exactly like UCS (why?).
 Try that!
 If you get different numbers of nodes visited, you might have a bug.
 
@@ -596,7 +615,7 @@ Your task is to implement the following `guessCost` heuristic for **GridGraph** 
 - **GridGraph**:
   The [straight-line distance](https://en.wikipedia.org/wiki/Euclidean_distance) between the two points.
   You may find some methods of the **Point** class useful here.
-  After implementing you should see an improvement in the number of loop iterations.
+  After implementing it, you should see an improvement in the number of loop iterations.
 
     ```
     $ java RunPathFinder ucs GridGraph-NoGrid graphs/GridGraph/AR0012SR.map 11:73 85:127
@@ -615,9 +634,9 @@ Your task is to implement the following `guessCost` heuristic for **GridGraph** 
     ```
 
 - **WordLadder**:
-  For words of the same length, the number of character positions where the letters differ from each other.
-  For example, `guessCost("örter", "arten")` should be 2: the first and last characters differ (`ö`/`a` and `r`/`n`), but the middle ones (`rte`) are the same.
-  Your method should not fail if it happens to be called on words of different length.
+  The number of character positions where the letters differ from each other.
+  For example, `guessCost("örter", "arten")` should return 2: the first and last characters differ (`ö`/`a` and `r`/`n`), but the middle ones (`rte`) are the same.
+  Your method should not fail if it happens to be called on words of different length, but the return value then doesn't matter much (why?).
 
     ```
     $ java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-saldo.txt eller glada
@@ -643,7 +662,6 @@ Your task is to implement the following `guessCost` heuristic for **GridGraph** 
 
 The A* algorithm works correctly only if the heuristic is *admissible*, which means that the heuristic must never over-estimate the cost.
 It's fine to under-estimate: it will still find an optimal path, but if the heuristic is too under-estimating, it will take longer.
-If the heuristic is 0, then A* behaves just like UCS.
 
 
 ## Your submission
