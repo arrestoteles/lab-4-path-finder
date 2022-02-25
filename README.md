@@ -274,6 +274,7 @@ The class already contains code that reads the dictionary, but you must complete
 **Note:**
 All graph files are encoded in UTF-8 (Unicode).
 If you experience problems searching for words with special characters (`å`, `ä`, `ö`), your setup may have a character encoding problem.
+Try switching to an English or Swedish system locale.
 
 #### AdjacencyGraph:
 
@@ -356,6 +357,8 @@ Here is pseudocode of the simplest version of UCS:
 
 It is important that we return as soon as we reach the goal.
 Otherwise, we will continue adding new entries to the queue indefinitely.
+
+**Hint**: `removeMin` is called `poll` in the Java API for priority queues.
 
 Implement this algorithm in the `searchUCS` method.
 When you return a result, use `null` for the `path` argument for now.
