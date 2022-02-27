@@ -93,17 +93,13 @@ public class PathFinder<Node> {
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
         PQEntry newEntry = new PQEntry(start, 0, null, null);
+        Set<Node> setm = new TreeSet<>();
         pqueue.add(newEntry); // add the start entry
-
         while (!pqueue.isEmpty()){
-           // PQEntry entry = it.next();
             PQEntry entry = pqueue.peek();
-
             if (entry.node.equals(goal)) {
-                return new Result(true, start, goal, entry.costToHere, null, iterations);
-
+                return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
             }
-
             for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
                 Node target = currentEdge.to();
                 newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry);
@@ -112,8 +108,7 @@ public class PathFinder<Node> {
             pqueue.poll();
             iterations++;
         }
-
-
+        System.out.println("fail");
         return new Result(false, start, goal, -1, null, iterations);
     }
     
@@ -142,7 +137,14 @@ public class PathFinder<Node> {
          * TODO: Task 1b *
          * Change here.  *
          *****************/
-        return null;
+
+        List<DirectedEdge<Node>> res = new ArrayList<>();
+        return Paths(res, entry);
+    }
+    public List<DirectedEdge<Node>> Paths(List<DirectedEdge<Node>> res, PQEntry entry){
+        if (entry.lastEdge == null) return res;
+        res.add(entry.lastEdge);
+        return Paths(res, entry.backPointer);
     }
 
     /**
