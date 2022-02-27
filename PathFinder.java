@@ -1,8 +1,6 @@
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
@@ -94,6 +92,28 @@ public class PathFinder<Node> {
          * Change here.                                                                                  *
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
+        PQEntry newEntry = new PQEntry(start, 0, null, null);
+        pqueue.add(newEntry); // add the start entry
+
+        while (!pqueue.isEmpty()){
+           // PQEntry entry = it.next();
+            PQEntry entry = pqueue.peek();
+
+            if (entry.node.equals(goal)) {
+                return new Result(true, start, goal, entry.costToHere, null, iterations);
+
+            }
+
+            for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
+                Node target = currentEdge.to();
+                newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry);
+                pqueue.add(newEntry);
+            }
+            pqueue.poll();
+            iterations++;
+        }
+
+
         return new Result(false, start, goal, -1, null, iterations);
     }
     
