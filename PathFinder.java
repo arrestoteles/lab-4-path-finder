@@ -203,7 +203,7 @@ public class PathFinder<Node> {
             if (iterations <= 0)
                 w.println("ERROR: You have to iterate over at least the starting node!");
             w.println("Loop iterations: " + iterations);
-            w.println("Elapsed time: " + elapsedTime);
+            w.println("Elapsed time: " + elapsedTime + "s");
             if (success) {
                 w.println("Cost of path from " + start + " to " + goal + ": " + DirectedEdge.DECIMAL_FORMAT.format(cost));
                 if (path == null)

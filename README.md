@@ -190,7 +190,7 @@ The current implementation of UCS is just a stub that never finds anything.
 Your Task 1 is to fix that.
 
 It's no use trying the "random" algorithm on the **NPuzzle**: it will almost certainly never find a solution.
-In fact, already for *N* = 4, the number of states is 16! ≈ 2 · 10^13.
+In fact, already for *N* = 4, the number of states is 16! ≈ 2 · 10<sup>13</sup>.
 Thus, we cannot even store the set of nodes in memory.
 
 ### GridGraph
@@ -315,9 +315,9 @@ Try switching to an English or Swedish system locale.
   - Suggested searches: any start and goal of the same length (between 4 and 8 characters)
 
 - **swedish-romaner.txt** and **swedish-saldo.txt** are two Swedish word lists compiled from [Språkbanken Text](https://spraakbanken.gu.se/resurser).
-  They contain 75,740 words (**words-romaner.txt**) and 888,275 words (**words-saldo.txt**), respectively.
-  - Suggested searches (after you have completed Task 2 below): `eller` to `glada` (**words-romaner.txt**); `njuta` to `övrig` (**words-saldo.txt**)
-  - Another interesting combination is to try any combination of the following words: `ämnet`, `åmade`, `örter`, `öring` (**words-romaner.txt**)
+  They contain 75,740 words (**swedish-romaner.txt**) and 888,275 words (**swedish-saldo.txt**), respectively.
+  - Suggested searches (after you have completed Task 2 below): `eller` to `glada` (**swedish-romaner.txt**); `njuta` to `övrig` (**swedish-saldo.txt**)
+  - Another interesting combination is to try any combination of the following words: `ämnet`, `åmade`, `örter`, `öring` (**swedish-romaner.txt**)
 
 ## Task 1: Uniform-cost search
 
@@ -347,18 +347,18 @@ Here is pseudocode of the simplest version of UCS:
 
     Result searchUCS(Node start, Node goal):
         pqueue = new priority queue of PQEntry comparing costToHere
-		add pqueue entry for start
+        add pqueue entry for start
         while there is an entry to remove from pqueue:
             if entry.node is goal:
                 SUCCESS:) extract the path and return it
             for every edge starting at entry.node:
-				add pqueue entry for target of edge with cost that of entry plus edge weight
+                add pqueue entry for target of edge with cost that of entry plus edge weight
         FAILURE:( there is no path
 
 It is important that we return as soon as we reach the goal.
 Otherwise, we will continue adding new entries to the queue indefinitely.
 
-**Hint**: `removeMin` is called `poll` in the Java API for priority queues.
+**Hint**: `removeMin` is called `remove` in the Java API for priority queues.
 
 Implement this algorithm in the `searchUCS` method.
 When you return a result, use `null` for the `path` argument for now.
@@ -493,7 +493,7 @@ Make sure to use `alphabet` (the set of letters appearing in dictionary words) i
 After you completed your implementation, you should be able to solve the following word ladders:
 
 ```
-$ java RunPathFinder ucs WordLadder graphs/WordLadder/words-romaner.txt
+$ java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-romaner.txt
 Word ladder graph with 75740 words
 Alphabet: àaábâcdäeåfægçhèiéjêkëlmínîoïpqñrsótuõvöwxøyzúü
 
@@ -608,9 +608,9 @@ This is the implementation:
     double guessCost(String s, String t):
         cost = 0
         for tile in tiles (excluding the empty tile):
-		    (sx, sy) = coordinates of tile in s
+            (sx, sy) = coordinates of tile in s
             (tx, ty) = coordinates of tile in t
-		    cost += |sx - sy| + |tx - ty|
+            cost += |sx - sy| + |tx - ty|
         return cost
 
 Your task is to implement the following `guessCost` heuristic for **GridGraph** and **WordLadder**:
