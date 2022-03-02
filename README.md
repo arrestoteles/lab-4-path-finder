@@ -54,7 +54,7 @@ start: Mölndal
 goal: Göteborg
 
 Loop iterations: 5
-Elapsed time: 0.0
+Elapsed time: 0.0s
 Path cost from Mölndal to Göteborg: 44
 Number of edges: 4
 Mölndal --[12]-> Öjersjö --[9]-> Mölnlycke --[15]-> Partille --[8]-> Göteborg
@@ -70,7 +70,7 @@ In that case, the program directly prints the path found:
 $ javac RunPathFinder.java
 $ java RunPathFinder random AdjacencyGraph graphs/AdjacencyGraph/citygraph-VGregion.txt Skara Vara
 Loop iterations: 16
-Elapsed time: 0.0
+Elapsed time: 0.0s
 Cost of path from Skara to Vara: 417
 Number of edges: 15
 Skara --[21]-> Skara --[15]-> Skara --[25]-> Skara --[36]-> Skara --[21]-> ..... --[31]-> Åkarp --[21]-> Götene --[36]-> Floby --[19]-> Källby --[35]-> Vara
@@ -153,7 +153,7 @@ There is also a link graph between more than 4500 Wikipedia pages, "wikipedia-gr
 ```
 $ java RunPathFinder random AdjacencyGraph graphs/AdjacencyGraph/wikipedia-graph.txt Sweden Norway
 Loop iterations: 175
-Elapsed time: 0.001 seconds
+Elapsed time: 0.001s
 Cost of path from Skara to Vara: 174
 Number of edges: 174
 Path: Sweden -> Potato -> Stefan_Edberg -> German_language -> Parliamentary_system -> ... -> Parliamentary_system -> Eastern_Orthodox_Church -> Chile -> Lithuania -> Norway
@@ -173,14 +173,14 @@ To make it more readable for humans, every row is separated by `/`:
 ```
 $ java RunPathFinder ucs NPuzzle 2 /_C/BA/ /AB/C_/
 Loop iterations: 22
-Elapsed time: 0.018
+Elapsed time: 0.018s
 Cost of path from /_C/BA/ to /AB/C_/: 6
 Number of edges: 6
 /_C/BA/ -> /BC/_A/ -> /BC/A_/ -> /B_/AC/ -> /_B/AC/ -> /AB/_C/ -> /AB/C_/
 
 $ java RunPathFinder ucs NPuzzle 3 /ABC/DEF/HG_/ /ABC/DEF/GH_/
 Loop iterations: 483841
-Elapsed time: 0.562
+Elapsed time: 0.562s
 No path found from /ABC/DEF/HG_/ to /ABC/DEF/GH_/
 ```
 
@@ -232,7 +232,7 @@ start: 1:1
 goal: 39:9
 
 Loop iterations: 971
-Elapsed time: 0.009
+Elapsed time: 0.009s
 Cost of path from 1:1 to 39:9: 58.87
 Number of edges: 51
 1:1 -> 2:1 -> 3:1 -> 4:1 -> 5:2 -> ..... -> 36:5 -> 37:6 -> 38:7 -> 39:8 -> 39:9
@@ -368,7 +368,7 @@ When you have done this, you should be able to run queries for nodes not too far
 ```
 $ java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-VGregion.txt Skara Lerum
 Loop iterations: 66240
-Elapsed time: 0.126
+Elapsed time: 0.126s
 Cost of path from Skara to Lerum: 115
 WARNING: you have not implemented extractPath!
 ```
@@ -394,7 +394,7 @@ After this is completed, your output will change:
 ```
 $ java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-VGregion.txt Skara Lerum
 Loop iterations: 66240
-Elapsed time: 0.123
+Elapsed time: 0.123s
 Cost of path from Skara to Lerum: 115
 Number of edges: 6
 Skara --[35]-> Vara --[28]-> Vårgårda --[9]-> Jonstorp --[15]-> Alingsås --[23]-> Stenkullen --[5]-> Lerum
@@ -424,7 +424,7 @@ When this is done, you should see a drastic improvement:
 ```
 $ java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-VGregion.txt Skara Lerum
 Loop iterations: 291
-Elapsed time: 0.005
+Elapsed time: 0.005s
 Cost of path from Skara to Lerum: 115
 Number of edges: 6
 Skara --[35]-> Vara --[28]-> Vårgårda --[9]-> Jonstorp --[15]-> Alingsås --[23]-> Stenkullen --[5]-> Lerum
@@ -436,21 +436,21 @@ Now you should be able to solve all kinds of problems in adjacency graphs, n-puz
 ```
 $ java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-EU.txt "Volos, Greece" "Oulu, Finland"
 Loop iterations: 23515
-Elapsed time: 0.038
+Elapsed time: 0.038s
 Cost of path from Volos, Greece to Oulu, Finland: 3488
 Number of edges: 12
 Volos, Greece --[923]-> Timişoara, Romania --[55]-> Arad, Romania --[114]-> Oradea, Romania --[83]-> Debrecen, Hungary --[50]-> ..... --[169]-> Lublin, Poland --[253]-> Białystok, Poland --[825]-> Tallinn, Estonia --[88]-> Helsinki, Finland --[607]-> Oulu, Finland
 
 $ java RunPathFinder ucs NPuzzle 3 /_AB/CDE/FGH/ /ABC/DEF/GH_/
 Loop iterations: 152439
-Elapsed time: 0.245
+Elapsed time: 0.245s
 Cost of path from /_AB/CDE/FGH/ to /ABC/DEF/GH_/: 22
 Number of edges: 22
 /_AB/CDE/FGH/ -> /A_B/CDE/FGH/ -> /ADB/C_E/FGH/ -> /ADB/_CE/FGH/ -> /ADB/FCE/_GH/ -> ..... -> /ABC/GDE/_HF/ -> /ABC/_DE/GHF/ -> /ABC/D_E/GHF/ -> /ABC/DE_/GHF/ -> /ABC/DEF/GH_/
 
 $ java RunPathFinder ucs GridGraph graphs/GridGraph/maze-100x50.txt 1:1 199:99
 Loop iterations: 26478
-Elapsed time: 0.109
+Elapsed time: 0.109s
 Cost of path from 1:1 to 199:99: 1216.48
 Number of edges: 1016
 1:1 -> 1:2 -> 1:3 -> 1:4 -> 2:5 -> ..... -> 196:97 -> 197:97 -> 198:97 -> 199:98 -> 199:99
@@ -511,7 +511,7 @@ start: mamma
 goal: pappa
 
 Loop iterations: 888
-Elapsed time: 0.03
+Elapsed time: 0.03s
 Cost of path from mamma to pappa: 6
 Number of edges: 6
 mamma -> mumma -> summa -> sumpa -> pumpa -> puppa -> pappa
@@ -520,7 +520,7 @@ start: katter
 goal: hundar
 
 Loop iterations: 9036
-Elapsed time: 0.084
+Elapsed time: 0.084s
 Cost of path from katter to hundar: 14
 Number of edges: 14
 katter -> kanter -> tanter -> tanten -> tanden -> ..... -> randas -> randad -> rundad -> rundar -> hundar
@@ -529,7 +529,7 @@ start: örter
 goal: öring
 
 Loop iterations: 20127
-Elapsed time: 0.095
+Elapsed time: 0.095s
 Cost of path from örter to öring: 30
 Number of edges: 30
 örter -> arter -> arten -> armen -> almen -> ..... -> slang -> klang -> kling -> kring -> öring
@@ -575,14 +575,14 @@ This is the only graph type with a ready-baked heuristic (see the next task for 
 ```
 $ java RunPathFinder ucs NPuzzle 3 /CBA/DEF/_HG/ /ABC/DEF/GH_/
 Loop iterations: 292528
-Elapsed time: 0.392
+Elapsed time: 0.392s
 Cost of path from /CBA/DEF/_HG/ to /ABC/DEF/GH_/: 24
 Number of edges: 24
 /CBA/DEF/_HG/ -> /CBA/_EF/DHG/ -> /_BA/CEF/DHG/ -> /B_A/CEF/DHG/ -> /BA_/CEF/DHG/ -> ..... -> /AC_/DBF/GEH/ -> /A_C/DBF/GEH/ -> /ABC/D_F/GEH/ -> /ABC/DEF/G_H/ -> /ABC/DEF/GH_/
 
 $ java RunPathFinder astar NPuzzle 3 /CBA/DEF/_HG/ /ABC/DEF/GH_/
 Loop iterations: 3871
-Elapsed time: 0.054
+Elapsed time: 0.054s
 Cost of path from /CBA/DEF/_HG/ to /ABC/DEF/GH_/: 24
 Number of edges: 24
 /CBA/DEF/_HG/ -> /CBA/_EF/DHG/ -> /_BA/CEF/DHG/ -> /B_A/CEF/DHG/ -> /BA_/CEF/DHG/ -> ..... -> /AC_/DBF/GEH/ -> /A_C/DBF/GEH/ -> /ABC/D_F/GEH/ -> /ABC/DEF/G_H/ -> /ABC/DEF/GH_/
@@ -623,17 +623,17 @@ Your task is to implement the following `guessCost` heuristic for **GridGraph** 
     ```
     $ java RunPathFinder ucs GridGraph-NoGrid graphs/GridGraph/AR0012SR.map 11:73 85:127
     Loop iterations: 40266
-    Elapsed time: 0.083
+    Elapsed time: 0.083s
     Cost of path from 11:73 to 85:127: 147.68
     Number of edges: 122
     11:73 -> 12:73 -> 13:74 -> 14:75 -> 15:75 -> ..... -> 86:123 -> 85:124 -> 85:125 -> 85:126 -> 85:127
 
     $ java RunPathFinder astar GridGraph-NoGrid graphs/GridGraph/AR0012SR.map 11:73 85:127
-    Loop iterations: 40266
-    Elapsed time: 0.091
+    Loop iterations: 16700
+    Elapsed time: 0.064s
     Cost of path from 11:73 to 85:127: 147.68
     Number of edges: 122
-    11:73 -> 12:73 -> 13:74 -> 14:75 -> 15:75 -> ..... -> 86:123 -> 85:124 -> 85:125 -> 85:126 -> 85:127
+    11:73 -> 12:73 -> 13:73 -> 14:73 -> 15:73 -> ..... -> 87:123 -> 86:124 -> 86:125 -> 85:126 -> 85:127
     ```
 
 - **WordLadder**:
@@ -644,14 +644,14 @@ Your task is to implement the following `guessCost` heuristic for **GridGraph** 
     ```
     $ java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-saldo.txt eller glada
     Loop iterations: 25481
-    Elapsed time: 0.252
+    Elapsed time: 0.252s
     Cost of path from eller to glada: 7
     Number of edges: 7
     eller -> elles -> ellas -> elias -> glias -> glids -> glads -> glada
 
     $ java RunPathFinder astar WordLadder graphs/WordLadder/swedish-saldo.txt eller glada
     Loop iterations: 192
-    Elapsed time: 0.024
+    Elapsed time: 0.024s
     Cost of path from eller to glada: 7
     Number of edges: 7
     eller -> elles -> ellas -> elias -> glias -> glids -> glads -> glada
