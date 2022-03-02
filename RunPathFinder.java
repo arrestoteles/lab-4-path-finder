@@ -23,11 +23,11 @@ public class RunPathFinder {
     public static void main(String[] args) throws IOException {
         if (args.length == 0)
             args = new String[] { 
-                "ucs",         // Algorithm = random | ucs | astar
-                "WordLadder", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
-                "graphs/WordLadder/swedish-romaner.txt",  // Graph
-                "mamma",           // Start node
-                "pappa"           // Goal node
+                "astar",         // Algorithm = random | ucs | astar
+                "NPuzzle", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
+                "3",  // Graph
+                "/CBA/DEF/_HG/",           // Start node
+                "/ABC/DEF/GH_/"           // Goal node
             };
 
         String algorithm, graphType, filePath;

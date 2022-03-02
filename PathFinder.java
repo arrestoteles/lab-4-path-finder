@@ -99,8 +99,10 @@ public class PathFinder<Node> {
             PQEntry entry = pqueue.peek();
             if(visited.contains(entry.node)){
                 pqueue.poll();
+                iterations++;
                 continue;
-            }if (entry.node.equals(goal)) {
+            }
+            if (entry.node.equals(goal)) {
                 return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
             }for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
                 Node target = currentEdge.to();
@@ -121,11 +123,34 @@ public class PathFinder<Node> {
      */
     public Result searchAstar(Node start, Node goal) {
         int iterations = 0;
+        Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.estimatedCost));
         /*************************************************************************************************
          * TODO: Task 1a+c                                                                               *
          * Change here.                                                                                  *
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
+        Set<Node> visited = new HashSet<>();
+        PQEntry newEntry = new PQEntry(start, 0, null, null);
+        pqueue.add(newEntry); // add the start entry
+        while (!pqueue.isEmpty()){
+            PQEntry currentEntry = pqueue.peek();
+            if(visited.contains(currentEntry.node)){
+                pqueue.poll();
+                iterations++;
+                continue;
+            }if (currentEntry.node.equals(goal)) {
+                return new Result(true, start, goal, currentEntry.costToHere, extractPath(currentEntry), iterations);
+            }for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(currentEntry.node)){
+                Node targetNode = currentEdge.to();
+                double estimatedCost = currentEntry.costToHere + currentEdge.weight() + graph.guessCost(targetNode, goal);
+                newEntry = new PQEntry(targetNode, currentEntry.costToHere + currentEdge.weight(), currentEdge, currentEntry, estimatedCost);
+                pqueue.add(newEntry);
+            }
+            visited.add(currentEntry.node);
+            pqueue.poll();
+            iterations++;
+        }
+        // only happens if we didn't find the path
         return new Result(false, start, goal, -1, null, iterations);
     }
 
@@ -139,12 +164,11 @@ public class PathFinder<Node> {
          * TODO: Task 1b *
          * Change here.  *
          *****************/
-        List<DirectedEdge<Node>> res = new ArrayList<>();
+        LinkedList<DirectedEdge<Node>> res = new LinkedList<>();
         while(entry.lastEdge != null){
-            res.add(entry.lastEdge);
+            res.addFirst(entry.lastEdge);
             entry = entry.backPointer;
         }
-        Collections.reverse(res); //improve prob, stack?
         return res;
     }
 
@@ -157,6 +181,7 @@ public class PathFinder<Node> {
         public final double costToHere;
         public final DirectedEdge<Node> lastEdge;  // null for starting entry
         public final PQEntry backPointer;          // null for starting entry
+        public final double estimatedCost;
         /***************************************************
          * TODO: Task 3                                    *
          * Change here,                                    *
@@ -168,6 +193,15 @@ public class PathFinder<Node> {
             this.costToHere = costToHere;
             this.lastEdge = lastEdge;
             this.backPointer = backPointer;
+            this.estimatedCost = 0;
+        }
+
+        PQEntry(Node node, double costToHere, DirectedEdge<Node> lastEdge, PQEntry backPointer, double estimatedCost) {
+            this.node = node;
+            this.costToHere = costToHere;
+            this.lastEdge = lastEdge;
+            this.backPointer = backPointer;
+            this.estimatedCost = estimatedCost;
         }
     }
 
