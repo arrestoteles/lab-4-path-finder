@@ -104,11 +104,14 @@ public class PathFinder<Node> {
             }
             if (entry.node.equals(goal)) {
                 return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
-            }for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
+            }
+
+            for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
                 Node target = currentEdge.to();
                 newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry);
                 pqueue.add(newEntry);
             }
+
             visited.add(entry.node);
             pqueue.poll();
             iterations++;
@@ -133,20 +136,24 @@ public class PathFinder<Node> {
         PQEntry newEntry = new PQEntry(start, 0, null, null);
         pqueue.add(newEntry); // add the start entry
         while (!pqueue.isEmpty()){
-            PQEntry currentEntry = pqueue.peek();
-            if(visited.contains(currentEntry.node)){
+            PQEntry entry = pqueue.peek();
+            if(visited.contains(entry.node)){
                 pqueue.poll();
                 iterations++;
                 continue;
-            }if (currentEntry.node.equals(goal)) {
-                return new Result(true, start, goal, currentEntry.costToHere, extractPath(currentEntry), iterations);
-            }for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(currentEntry.node)){
-                Node targetNode = currentEdge.to();
-                double estimatedCost = currentEntry.costToHere + currentEdge.weight() + graph.guessCost(targetNode, goal);
-                newEntry = new PQEntry(targetNode, currentEntry.costToHere + currentEdge.weight(), currentEdge, currentEntry, estimatedCost);
-                pqueue.add(newEntry);
             }
-            visited.add(currentEntry.node);
+            if (entry.node.equals(goal)) {
+                return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
+            }
+
+            for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
+                Node target = currentEdge.to();
+                double estimatedCost = entry.estimatedCost + currentEdge.weight() + graph.guessCost(entry.node, goal);
+                newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry, estimatedCost);
+                pqueue.add(newEntry);
+            }                           // entry.estimatedCost?? why not entry.costToHere???
+
+            visited.add(entry.node);
             pqueue.poll();
             iterations++;
         }
