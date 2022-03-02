@@ -92,23 +92,25 @@ public class PathFinder<Node> {
          * Change here.                                                                                  *
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
+        Set<Node> visited = new HashSet<>();
         PQEntry newEntry = new PQEntry(start, 0, null, null);
-        Set<Node> setm = new TreeSet<>();
         pqueue.add(newEntry); // add the start entry
         while (!pqueue.isEmpty()){
             PQEntry entry = pqueue.peek();
-            if (entry.node.equals(goal)) {
+            if(visited.contains(entry.node)){
+                pqueue.poll();
+                continue;
+            }if (entry.node.equals(goal)) {
                 return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
-            }
-            for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
+            }for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
                 Node target = currentEdge.to();
                 newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry);
                 pqueue.add(newEntry);
             }
+            visited.add(entry.node);
             pqueue.poll();
             iterations++;
         }
-        System.out.println("fail");
         return new Result(false, start, goal, -1, null, iterations);
     }
     
@@ -137,15 +139,15 @@ public class PathFinder<Node> {
          * TODO: Task 1b *
          * Change here.  *
          *****************/
-
         List<DirectedEdge<Node>> res = new ArrayList<>();
-        return Paths(res, entry);
+        while(entry.lastEdge != null){
+            res.add(entry.lastEdge);
+            entry = entry.backPointer;
+        }
+        Collections.reverse(res); //improve prob, stack?
+        return res;
     }
-    public List<DirectedEdge<Node>> Paths(List<DirectedEdge<Node>> res, PQEntry entry){
-        if (entry.lastEdge == null) return res;
-        res.add(entry.lastEdge);
-        return Paths(res, entry.backPointer);
-    }
+
 
     /**
      * Entries to put in the priority queues in {@code searchUCS} and {@code searchAstar}.

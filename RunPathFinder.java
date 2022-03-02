@@ -24,10 +24,10 @@ public class RunPathFinder {
         if (args.length == 0)
             args = new String[] { 
                 "ucs",         // Algorithm = random | ucs | astar
-                "AdjacencyGraph", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
-                "graphs/AdjacencyGraph/citygraph-VGregion.txt",  // Graph
-                "Skara",           // Start node
-                "Lerum"           // Goal node
+                "WordLadder", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
+                "graphs/WordLadder/swedish-romaner.txt",  // Graph
+                "mamma",           // Start node
+                "pappa"           // Goal node
             };
 
         String algorithm, graphType, filePath;
