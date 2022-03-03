@@ -110,11 +110,11 @@ It consists of some searching methods, inner classes for priority queue entries 
         Result search(String algorithm, Node start, Node end)
         Result searchRandom(Node start, Node end)
         Result searchUCS(Node start, Node end)    // this is Task 1a+c
-        Result searchAstar(Node start, Node end)  // this is Task 4
+        Result searchAstar(Node start, Node end)  // this is Task 3
 
         List<DirectedEdge<node>> extractPath(PQEntry entry) // this is Task 1b
 
-        class PQEntry  // you will extend this in Task 4
+        class PQEntry  // you will extend this in Task 3
         class Result
 
 ### DirectedEdge
