@@ -488,7 +488,10 @@ At your disposal are the following two instance variables:
     private Set<String> dictionary
     private Set<Character> alphabet
 
-Make sure to use `alphabet` (the set of letters appearing in dictionary words) instead of going over a fixed collection of characters.
+Here, `alphabet` is the set of letters appearing in dictionary words.
+Use this instead of going over a fixed collection of characters.
+
+**Note**: You should not go over all words in the dictionary (that's too expensive).
 
 After you completed your implementation, you should be able to solve the following word ladders:
 
