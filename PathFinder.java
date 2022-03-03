@@ -96,24 +96,18 @@ public class PathFinder<Node> {
         PQEntry newEntry = new PQEntry(start, 0, null, null);
         pqueue.add(newEntry); // add the start entry
         while (!pqueue.isEmpty()){
-            PQEntry entry = pqueue.peek();
-            if(visited.contains(entry.node)){
-                pqueue.poll();
-                iterations++;
-                continue;
+            PQEntry entry = pqueue.remove();
+            if(!visited.contains(entry.node)) {
+                if (entry.node.equals(goal)) {
+                    return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
+                }
+                for (DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)) {
+                    Node target = currentEdge.to();
+                    newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry);
+                    pqueue.add(newEntry);
+                }
             }
-            if (entry.node.equals(goal)) {
-                return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
-            }
-
-            for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
-                Node target = currentEdge.to();
-                newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry);
-                pqueue.add(newEntry);
-            }
-
             visited.add(entry.node);
-            pqueue.poll();
             iterations++;
         }
         return new Result(false, start, goal, -1, null, iterations);
@@ -135,25 +129,20 @@ public class PathFinder<Node> {
         Set<Node> visited = new HashSet<>();
         PQEntry startEntry = new PQEntry(start, 0, null, null, graph.guessCost(start, goal));
         pqueue.add(startEntry); // add the start entry
-        while (!pqueue.isEmpty()){
-            PQEntry entry = pqueue.peek();
-            if(visited.contains(entry.node)){
-                pqueue.poll();
-                iterations++;
-                continue;
+        while(!pqueue.isEmpty()){
+            PQEntry currentEntry = pqueue.remove();
+            if(!visited.contains(currentEntry.node)) {
+                if (currentEntry.node.equals(goal)) {
+                    return new Result(true, start, goal, currentEntry.costToHere, extractPath(currentEntry), iterations);
+                }
+                for (DirectedEdge<Node> currentEdge : graph.outgoingEdges(currentEntry.node)) {
+                    Node target = currentEdge.to();
+                    double estimatedCost = currentEntry.costToHere + currentEdge.weight() + graph.guessCost(target, goal);
+                    startEntry = new PQEntry(target, currentEntry.costToHere + currentEdge.weight(), currentEdge, currentEntry, estimatedCost);
+                    pqueue.add(startEntry);
+                }                           // currentEntry.estimatedCost?? why not currentEntry.costToHere???
+                visited.add(currentEntry.node);
             }
-            if (entry.node.equals(goal)) {
-                return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
-            }
-            for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
-                Node target = currentEdge.to();
-                double estimatedCost = entry.costToHere + currentEdge.weight() + graph.guessCost(entry.node, goal);
-                startEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry, estimatedCost);
-                pqueue.add(startEntry);
-            }                           // entry.estimatedCost?? why not entry.costToHere???
-
-            visited.add(entry.node);
-            pqueue.poll();
             iterations++;
         }
         // only happens if we didn't find the path

@@ -3,9 +3,9 @@
 ******************************************************************************/
 
 Group members:
-- [...]
-- [...]
-- [...]
+- Armin Balesic
+- Victor Campanello
+- Shariq Shahbaz
 
 /******************************************************************************
 ** 1. List the number of loop iterations, minimal cost, and a shortest path
@@ -99,9 +99,9 @@ NPuzzle:    [...]
 ** A. Approximately how many hours did you spend on the assignment?
 ******************************************************************************/
 
-[..group member..]:  [..hours..]
-[..group member..]:  [..hours..]
-[..group member..]:  [..hours..]
+Armin Balesic       -
+Victor Campanello   -
+Shariq Shahbaz      -
 
 /******************************************************************************
 ** B. Are there any known bugs / limitations?

@@ -73,7 +73,7 @@ public class WordLadder implements DirectedGraph<String> {
         for(int i = 0; i < w.length(); i++){
             for (Character currChar : alphabet) {
                 String alteredW = w.substring(0, i) + currChar + w.substring(i + 1);
-                if (dictionary.contains(alteredW)) {
+                if (dictionary.contains(alteredW) && !alteredW.equals(w)) {
                     DirectedEdge<String> newEdge = new DirectedEdge<>(w, alteredW);
                     resultList.add(newEdge);
                 }
@@ -95,8 +95,8 @@ public class WordLadder implements DirectedGraph<String> {
          * Change here. *
          ****************/
         double res = 0;
-        for(int i = 0; i<w.length(); i++){
-            if(w.charAt(i) != u.charAt(i)) res++;
+        for(int i = 0; i < w.length(); i++){
+            if(i < u.length() && w.charAt(i) != u.charAt(i)) res++;
         }
         return res;
     }
