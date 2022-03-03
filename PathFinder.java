@@ -125,16 +125,16 @@ public class PathFinder<Node> {
      * @param goal   the goal node
      */
     public Result searchAstar(Node start, Node goal) {
-        int iterations = 0;
-        Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.estimatedCost));
         /*************************************************************************************************
          * TODO: Task 1a+c                                                                               *
          * Change here.                                                                                  *
          * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
          *************************************************************************************************/
+        int iterations = 0;
+        Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.estimatedCost));
         Set<Node> visited = new HashSet<>();
-        PQEntry newEntry = new PQEntry(start, 0, null, null);
-        pqueue.add(newEntry); // add the start entry
+        PQEntry startEntry = new PQEntry(start, 0, null, null, graph.guessCost(start, goal));
+        pqueue.add(startEntry); // add the start entry
         while (!pqueue.isEmpty()){
             PQEntry entry = pqueue.peek();
             if(visited.contains(entry.node)){
@@ -145,12 +145,11 @@ public class PathFinder<Node> {
             if (entry.node.equals(goal)) {
                 return new Result(true, start, goal, entry.costToHere, extractPath(entry), iterations);
             }
-
             for(DirectedEdge<Node> currentEdge : graph.outgoingEdges(entry.node)){
                 Node target = currentEdge.to();
-                double estimatedCost = entry.estimatedCost + currentEdge.weight() + graph.guessCost(entry.node, goal);
-                newEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry, estimatedCost);
-                pqueue.add(newEntry);
+                double estimatedCost = entry.costToHere + currentEdge.weight() + graph.guessCost(entry.node, goal);
+                startEntry = new PQEntry(target, entry.costToHere + currentEdge.weight(), currentEdge, entry, estimatedCost);
+                pqueue.add(startEntry);
             }                           // entry.estimatedCost?? why not entry.costToHere???
 
             visited.add(entry.node);
