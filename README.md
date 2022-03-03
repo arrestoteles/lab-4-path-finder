@@ -110,11 +110,11 @@ It consists of some searching methods, inner classes for priority queue entries 
         Result search(String algorithm, Node start, Node end)
         Result searchRandom(Node start, Node end)
         Result searchUCS(Node start, Node end)    // this is Task 1a+c
-        Result searchAstar(Node start, Node end)  // this is Task 4
+        Result searchAstar(Node start, Node end)  // this is Task 3
 
         List<DirectedEdge<node>> extractPath(PQEntry entry) // this is Task 1b
 
-        class PQEntry  // you will extend this in Task 4
+        class PQEntry  // you will extend this in Task 3
         class Result
 
 ### DirectedEdge
@@ -488,7 +488,10 @@ At your disposal are the following two instance variables:
     private Set<String> dictionary
     private Set<Character> alphabet
 
-Make sure to use `alphabet` (the set of letters appearing in dictionary words) instead of going over a fixed collection of characters.
+Here, `alphabet` is the set of letters appearing in dictionary words.
+Use this instead of going over a fixed collection of characters.
+
+**Note**: You should not go over all words in the dictionary (that's too expensive).
 
 After you completed your implementation, you should be able to solve the following word ladders:
 
