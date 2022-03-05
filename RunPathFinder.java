@@ -24,11 +24,11 @@ public class RunPathFinder {
         if (args.length == 0)
             args = new String[] { 
                 "ucs",         // Algorithm = random | ucs | astar
-                "AdjacencyGraph", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
-                "graphs/AdjacencyGraph/citygraph-VGregion.txt",  // Graph
-                "Skara",           // Start node
-                "Lerum"           // Goal node
-            };
+                "WordLadder", // Graphtype = AdjacencyGraph | WordLadder | NPuzzle | GridGraph
+                "graphs/WordLadder/swedish-romaner.txt",  // Graph
+                "eller",           // Start node
+                "glada"           // Goal node
+            }; // /_AB/CDE/FGH/ , to the goal /ABC/DEF/GH_/ 292527 vs 3870, 152438 vs 3201 // njuta to övrig, 111365 vs 109171  17581 vs 16450/ eller glada vs 16450
 
         String algorithm, graphType, filePath;
         ArrayList<String[]> queries = new ArrayList<>();

@@ -14,48 +14,48 @@ Group members:
 
 > java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-SE.txt Lund Kiruna
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 5426
+minimal cost:    1826
+shortest path:   31
 
 > java RunPathFinder ucs NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 483539
+minimal cost:    31
+shortest path:   31
 
 > java RunPathFinder astar NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: [...]
-minimal cost:    [...]
+loop iterations: 43619
+minimal cost:    31
 
 > java RunPathFinder ucs NPuzzle 3 /HGF/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 483841
+minimal cost:    no path found
+shortest path:   no path found
 
 > java RunPathFinder ucs GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 159326
+minimal cost:    366.4
+shortest path:   308
 
 > java RunPathFinder astar GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
 
-loop iterations: [...]
-minimal cost:    [...]
+loop iterations: 95159
+minimal cost:    366.4
 
 > java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
 
-loop iterations: [...]
-minimal cost:    [...]
-shortest path:   [...]
+loop iterations: 71181
+minimal cost:    11
+shortest path:   11
 
 > java RunPathFinder astar WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
 
-loop iterations: [...]
-minimal cost:    [...]
+loop iterations: 7054
+minimal cost:    11
 
 /******************************************************************************
 ** 2. For each of the three classes GridGraph, WordLadder, and NPuzzle,
@@ -64,11 +64,12 @@ minimal cost:    [...]
 **    Try a number of different examples per class.
 ******************************************************************************/
 
-GridGraph:  [...]
+GridGraph:  down by a factor of 1.5
 
-WordLadder: [...]
+WordLadder: down by a factor of 10
 
-NPuzzle:    [...]
+NPuzzle:    syster broder it is down by a factor of 10, other examples it is down by a factor of 1.1 (111365 -> 109171
+for njuta to övrig, 17581 -> 16450 for eller to glada)
 
 /******************************************************************************
 ** 3. For which of the three classes GridGraph, WordLadder, and NPuzzle,
@@ -76,14 +77,17 @@ NPuzzle:    [...]
 **    What do you think is the reason for this?
 ******************************************************************************/
 
-[...]
+NPuzzle: The NPuzzle has the best implementation of the guessCost method as it takes all other tiles (except the
+empty one) into consideration. Hence, this leads to the largest improvement fromus ucs to astar.
 
 /******************************************************************************
 ** 4. What are the main differences between your implementations
 **    of searchAstar and searchUCS?
 ******************************************************************************/
 
-[...]
+The main difference in our implementation of the  Astar as compared to our UCS is  the fact that we make use of a
+heuristic estimatedCost, calculated in the guessCost method off the graph class,
+to sort the priority queue instead of the 'costToHere'.
 
 /******************************************************************************
 ** 5. What's the asymptotic average-case complexity of WordLadder.outgoingEdges
@@ -91,7 +95,7 @@ NPuzzle:    [...]
 **    Justify briefly.
 ******************************************************************************/
 
-[...]
+O(kn), as the complexity of the outer loop is O(n) and the complexity of the inner loop is O(k).
 
 /******************************************************************************
 ** Appendix: General information
@@ -99,15 +103,15 @@ NPuzzle:    [...]
 ** A. Approximately how many hours did you spend on the assignment?
 ******************************************************************************/
 
-Armin Balesic       -
-Victor Campanello   -
-Shariq Shahbaz      -
+Armin Balesic       - 8
+Victor Campanello   - 9.5
+Shariq Shahbaz      - 9.5
 
 /******************************************************************************
 ** B. Are there any known bugs / limitations?
 ******************************************************************************/
 
-[...]
+No
 
 /******************************************************************************
 ** C. Did you collaborate with any other students on this lab?
@@ -116,13 +120,13 @@ Shariq Shahbaz      -
 **    may have used in creating your design.
 ******************************************************************************/
 
-[...]
+None
 
 /******************************************************************************
 ** D. Describe any serious problems you encountered.
 ******************************************************************************/
 
-[...]
+None
 
 /******************************************************************************
 ** E. List any other comments here.
