@@ -134,4 +134,4 @@ None
 **    from doing the assignment, and whether you enjoyed it.
 ******************************************************************************/
 
-[...]
+N/A
